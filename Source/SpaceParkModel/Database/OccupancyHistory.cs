@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpaceParkModel.Database
 {
@@ -9,5 +10,6 @@ namespace SpaceParkModel.Database
         public DateTime ArrivalTime { get; set; }
         public DateTime DepartureTime { get; set; }
         public decimal AmountPaid { get; set; }
+        public string SpaceParkName { get; set; }
     }
 }

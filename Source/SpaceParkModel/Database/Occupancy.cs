@@ -16,5 +16,7 @@ namespace SpaceParkModel.Database
         public DateTime? DepartureTime { get; set; }
         [ForeignKey("ParkingSpots")]
         public int ParkingSpotID { get; set; }
+        [ForeignKey("SpacePark")]
+        public int SpaceParkID { get; set; }
     }
 }
