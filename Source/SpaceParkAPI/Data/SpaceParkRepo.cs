@@ -13,6 +13,11 @@ namespace SpaceParkAPI
             return character;
         }
 
+        public List<Receipt> GetHistory(string personData)
+        {
+            throw new NotImplementedException();
+        }
+
         public StarShip GetShip(int num)
         {
             var charactership =  API.GetSpaceShip(num);

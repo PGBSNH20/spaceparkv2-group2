@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SpaceParkAPI;
+using SpaceParkAPI.Data;
 using SpaceParkAPI.Data.DB;
 
 namespace SpaceParkAPI
@@ -39,6 +40,7 @@ namespace SpaceParkAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpacePark_RestAPI", Version = "v1" });
             });
             services.AddScoped<ISpaceParkRepo, SpaceParkRepo>();
+            services.AddScoped<ISpaceParkRepo, SqlSpaceParkRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

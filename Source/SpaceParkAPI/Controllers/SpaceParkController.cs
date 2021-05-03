@@ -21,12 +21,13 @@ namespace SpaceParkAPI
 
 
 
-       // private readonly SpaceParkRepo _repository = new SpaceParkRepo();
+        // private readonly SpaceParkRepo _repository = new SpaceParkRepo();
 
         //public WeatherForecastController(ILogger<WeatherForecastController> logger)
         //{
         //    _logger = logger;
         //}
+
         [HttpGet("{name}/{shipname}")]
         public ActionResult<PersonData> ValidateInput(string name, string shipname)
         {
@@ -61,26 +62,26 @@ namespace SpaceParkAPI
 
 
 
-        //[HttpGet("{name}")]
-        //public ActionResult<PersonData> GetCharacter(string name)
-        //{
-        //    var commanditem = _repository.GetCharacterByName(name);
-        //    return Ok(commanditem);
-        //}
-        //[HttpGet("{shipid}")]
-        //public ActionResult<StarShip> GetStarShip(int name)
-        //{
-        //    var commanditem = _repository.GetShip(name);
-        //    return Ok(commanditem);
-        //}
+        [HttpGet("{name}")]
+        public ActionResult<List<Receipt>> ShowHistory(string name)
+        {
+            var commanditem = _repository.GetHistory(name);
+            return Ok(commanditem);
+        }
+            //[HttpGet("{shipid}")]
+            //public ActionResult<StarShip> GetStarShip(int name)
+            //{
+            //    var commanditem = _repository.GetShip(name);
+            //    return Ok(commanditem);
+            //}
 
-        //[HttpGet("/people/name/ship")]
-        //public ActionResult<StarShip> GetStarShip(int name)
-        //{
-        //    var commanditem = _repository.GetShip(name);
-        //    return Ok(commanditem);
-        //}
+            //[HttpGet("/people/name/ship")]
+            //public ActionResult<StarShip> GetStarShip(int name)
+            //{
+            //    var commanditem = _repository.GetShip(name);
+            //    return Ok(commanditem);
+            //}
 
 
-    }
+        }
 }
