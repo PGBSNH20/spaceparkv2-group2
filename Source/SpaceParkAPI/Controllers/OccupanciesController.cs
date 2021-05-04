@@ -143,18 +143,6 @@ namespace SpaceParkAPI.Controllers
             SpaceParkName = ""
         };
 
-        //private string GetPersonName(int personID)
-        //{
-        //    var person = _context.Persons.First(person => person.ID == personID);
-        //    return person.Name;
-        //}
-
-        //private string GetSpaceshipName(int spaceshipID)
-        //{
-        //    var spaceship = _context.Spaceships.First(spaceship => spaceship.ID == spaceshipID);
-        //    return spaceship.Name;
-        //}
-
         // PUT: api/Occupancies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPut("{id}")]
