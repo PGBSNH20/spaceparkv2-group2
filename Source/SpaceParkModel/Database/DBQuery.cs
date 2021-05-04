@@ -62,7 +62,7 @@ namespace SpaceParkModel.Database
             return 0;
         }
 
-        public static async Task FillOccupancy(string personName, string spaceshipName, int parkingSpotID)
+        public static async Task<Occupancy> FillOccupancy(string personName, string spaceshipName, int parkingSpotID)
         {
             if (parkingSpotID == 0)
             {
@@ -81,6 +81,8 @@ namespace SpaceParkModel.Database
             await using var context = new SpaceParkContext();
             context.Add(occupancy);
             context.SaveChanges();
+
+            return occupancy;
         }
 
         public static async Task<Occupancy> GetOpenOccupancyByName(string name)
@@ -135,6 +137,20 @@ namespace SpaceParkModel.Database
             var person = await context.Persons.FirstOrDefaultAsync(p => p.Name == name);
             int personID = person != null ? person.ID : 0;
             return personID;
+        }
+
+        public static async Task<string> GetPersonName(int personID)
+        {
+            await using var context = new SpaceParkContext();
+            var person = context.Persons.First(person => person.ID == personID);
+            return person.Name;
+        }
+
+        public static async Task<string> GetSpaceshipName(int spaceshipID)
+        {
+            await using var context = new SpaceParkContext();
+            var spaceship = context.Spaceships.First(spaceship => spaceship.ID == spaceshipID);
+            return spaceship.Name;
         }
 
         public static async Task<int> GetParkingSizeIDBySpot(int parkingSpotID)
@@ -252,6 +268,64 @@ namespace SpaceParkModel.Database
                 )
                 .Where(data => data.PersonName == name &&
                                data.DepartureTime.HasValue)
+                .Select(data => new OccupancyHistory
+                {
+                    PersonName = data.PersonName,
+                    SpaceshipName = data.SpaceshipName,
+                    ArrivalTime = data.ArrivalTime,
+                    DepartureTime = data.DepartureTime.GetValueOrDefault(),
+                    AmountPaid = data.AmountPaid
+                })
+                .ToListAsync();
+
+            return history;
+        }
+
+        public static async Task<List<OccupancyHistory>> GetHistory()
+        {
+            await using var context = new SpaceParkContext();
+            List<OccupancyHistory> history = await context.Persons
+                .Join(
+                    context.Occupancies,
+                    person => person.ID,
+                    occupancy => occupancy.PersonID,
+                    (person, occupancy) => new
+                    {
+                        OccupancyID = occupancy.ID,
+                        PersonName = person.Name,
+                        occupancy.SpaceshipID,
+                        occupancy.ArrivalTime,
+                        occupancy.DepartureTime
+                    }
+                )
+                .Join(
+                    context.Spaceships,
+                    occupancy => occupancy.SpaceshipID,
+                    spaceship => spaceship.ID,
+                    (occupancy, spaceship) => new
+                    {
+                        occupancy.OccupancyID,
+                        occupancy.PersonName,
+                        SpaceshipName = spaceship.Name,
+                        occupancy.ArrivalTime,
+                        occupancy.DepartureTime
+                    }
+                )
+                .Join(
+                    context.Payments,
+                    occupancy => occupancy.OccupancyID,
+                    payment => payment.OccupancyID,
+                    (occupancy, payment) => new
+                    {
+                        occupancy.OccupancyID,
+                        occupancy.PersonName,
+                        occupancy.SpaceshipName,
+                        occupancy.ArrivalTime,
+                        occupancy.DepartureTime,
+                        AmountPaid = payment.Amount
+                    }
+                )
+                .Where(data => data.DepartureTime.HasValue)
                 .Select(data => new OccupancyHistory
                 {
                     PersonName = data.PersonName,

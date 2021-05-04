@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 
 namespace SpaceParkAPI.Models
 {
-    public class OccupancyItem
+    public class OccupancyDTO
     {
+        // Data Transfer object
+
         public int ID { get; set; }
-        public string PersonName{ get; set; }
+        public string PersonName { get; set; }
         public string SpaceshipName { get; set; }
         public DateTime ArrivalTime { get; set; }
         public DateTime? DepartureTime { get; set; }
         public int ParkingSpotID { get; set; }
-        //public int SpaceParkID { get; set; }
+        //public int SpaceParkName { get; set; }
     }
 }
