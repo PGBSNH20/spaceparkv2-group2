@@ -21,7 +21,7 @@ namespace SpaceParkAPI.Data
         {
             
             // Gets all the users receipts based on character name.
-            var characterReceipts = _context.Receipts.Where(p => p.Name == personData);
+            var characterReceipts = _context.Receipts.Where(p => p.Name == personData).Include("Parkingspot");
             //Console.WriteLine($"\n{personData.Name}'s parking history");
             //Console.WriteLine();
             //for (int i = 0; i < characterReceipts.Count; i++)
