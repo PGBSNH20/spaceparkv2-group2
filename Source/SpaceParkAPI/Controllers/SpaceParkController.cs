@@ -79,7 +79,7 @@ namespace SpaceParkAPI
 
         }
 
-        [HttpGet("{name}/{shipname}")]
+        [HttpGet("{name}/{shipname}/unpark")]
         public ActionResult<SpaceParkReadDto> Unpark(string name, string shipname)
         {
             var commanditem = _repository.ValidateInput(name, shipname);
@@ -106,17 +106,10 @@ namespace SpaceParkAPI
                 p = commanditem1;
                 p.Starships[0] = s.Name;
                 CharacterData characterData = new CharacterData() { Name = p.Name, Starships = p.Starships };
-                _repository.UnPark(characterData, s);
-                SpaceParkReadDto b = new SpaceParkReadDto()
-                {
-                    Name = p.Name,
-                    StarshipName = s.Name,
-                    Arrival = DateTime.Now,
+                var receipt = _repository.UnPark(characterData, s);
 
 
-                };
-
-                return Ok(b);
+                return Ok(receipt);
 
             }
             else
@@ -124,52 +117,53 @@ namespace SpaceParkAPI
                 return BadRequest();
             }
 
-
-            //[HttpPost("{name}/{shipname}")]
-            //public ActionResult<SpaceParkReadDto> Park(string name, string shipname)
-            //{
-            //    var commanditem = _repository.ValidateInput(name, shipname);
-            //    List<StarShip> ships = new List<StarShip>();
-            //    StarShip s = new StarShip();
-            //    Logic a = new Logic();
-            //    PersonData p = new PersonData();
-
-
-            //    if (commanditem == true)
-            //    {
-            //        var commanditem1 = _repository.GetCharacterByName(name);
-            //        a.GetShipListByName(name);
-            //        ships = a.starshipsAvailable;
-            //        for (int i = 0; i < ships.Count; i++)
-            //        {
-            //            if (shipname.ToLower() == ships[i].Name.ToLower())
-            //            {
-
-            //                s = ships[i];
-            //            }
-
-            //        }
-            //        p = commanditem1;
-            //        p.Starships[0] = s.Name;
-            //        CharacterData characterData = new CharacterData() { Name = p.Name, Starships = p.Starships };
-            //        _repository.Park(characterData, s);
-
-            //        SpaceParkReadDto b = new SpaceParkReadDto()
-            //        {
-            //            Name = p.Name,
-            //            StarshipName = s.Name,
-            //            Arrival = DateTime.Now,
+        }
+            [HttpPost("{name}/{shipname}/park")]
+            public ActionResult<string> Park(string name, string shipname)
+            {
+                var commanditem = _repository.ValidateInput(name, shipname);
+                List<StarShip> ships = new List<StarShip>();
+                StarShip s = new StarShip();
+                Logic a = new Logic();
+                PersonData p = new PersonData();
 
 
-            //        };
-            //        return Ok(b);
-            //    }
-            //    else
-            //    {
-            //        return BadRequest(commanditem);
-            //    }
+                if (commanditem == true)
+                {
+                    var commanditem1 = _repository.GetCharacterByName(name);
+                    a.GetShipListByName(name);
+                    ships = a.starshipsAvailable;
+                    for (int i = 0; i < ships.Count; i++)
+                    {
+                        if (shipname.ToLower() == ships[i].Name.ToLower())
+                        {
 
-            //}
+                            s = ships[i];
+                        }
+
+                    }
+                    p = commanditem1;
+                    p.Starships[0] = s.Name;
+                    CharacterData characterData = new CharacterData() { Name = p.Name, Starships = p.Starships };
+                    _repository.Park(characterData, s);
+
+                    SpaceParkReadDto b = new SpaceParkReadDto()
+                    {
+                        Name = p.Name,
+                        StarshipName = s.Name,
+                        Arrival = DateTime.Now,
+
+
+                    };
+                    return Ok("Parking has been done");
+                }
+                else
+                {
+                    return BadRequest(commanditem);
+                }
+            }
+
+
             //[HttpGet("{shipid}")]
             //public ActionResult<StarShip> GetStarShip(int name)
             //{
@@ -185,23 +179,28 @@ namespace SpaceParkAPI
             //}
 
 
-        }
-        //[ApiController]
-        //[Route("/validate1/")]
-        //public class SpaceParkController1 : ControllerBase
-        //{
-        //    public SpaceParkController1(ISpaceParkRepo repo)
-        //    {
-        //        _repository = repo;
-        //    }
-        //    private readonly ISpaceParkRepo _repository;
 
-        //    [HttpGet("{name}")]
-        //    public ActionResult<List<Receipt>> ShowHistory(string name)
-        //    {
-        //        var commanditem = _repository.GetHistory(name);
-        //        return Ok(commanditem);
-        //    }
-        //}
+            //[ApiController]
+            //[Route("/validate1/")]
+            //public class SpaceParkController1 : ControllerBase
+            //{
+            //    public SpaceParkController1(ISpaceParkRepo repo)
+            //    {
+            //        _repository = repo;
+            //    }
+            //    private readonly ISpaceParkRepo _repository;
+
+            //    [HttpGet("{name}")]
+            //    public ActionResult<List<Receipt>> ShowHistory(string name)
+            //    {
+            //        var commanditem = _repository.GetHistory(name);
+            //        return Ok(commanditem);
+            //    }
+            //}
+
+        
     }
 }
+        
+    
+

@@ -69,5 +69,10 @@ namespace SpaceParkAPI
             return passed;
            
         }
+
+        Receipt ISpaceParkRepo.UnPark(CharacterData personData, StarShip starShip)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

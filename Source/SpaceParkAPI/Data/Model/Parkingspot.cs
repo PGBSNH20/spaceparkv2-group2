@@ -68,7 +68,7 @@ namespace SpaceParkAPI
             }
         }
 
-        public static void Unpark(StarShip starship, CharacterData character)
+        public static Receipt Unpark(StarShip starship, CharacterData character)
         {
            
             using var context = new SpaceParkContext();
@@ -113,6 +113,8 @@ namespace SpaceParkAPI
                 parked.SpaceshipName = null;
                 parked.Arrival = default;
                 context.SaveChanges();
+                return receipt;
+
                 //Console.WriteLine($"You have successfully unparked your vehicle {starship.Name}\n");
                 //Print.PrintReceipt(receipt);
             }
@@ -122,7 +124,10 @@ namespace SpaceParkAPI
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"\n{starship.Name} is not parked in our SpacePark!\n");
                 Console.ResetColor();
+
+                return null;
             }
+           
         }
 
         public static void ShowHistory(PersonData character)

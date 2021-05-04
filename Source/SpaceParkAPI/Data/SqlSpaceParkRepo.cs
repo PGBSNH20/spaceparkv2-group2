@@ -88,13 +88,14 @@ namespace SpaceParkAPI.Data
 
         
 
-        public void UnPark(CharacterData personData, StarShip starShip)
+        public Receipt UnPark(CharacterData personData, StarShip starShip)
         {
             if (personData == null || starShip == null)
             {
                 throw new ArgumentNullException(nameof(personData));
             }
-            Parkingspot.Unpark(starShip, personData);
+            var x= Parkingspot.Unpark(starShip, personData);
+            return x;
         }
     }
 }
