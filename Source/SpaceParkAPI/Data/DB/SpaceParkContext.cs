@@ -9,15 +9,6 @@ namespace SpaceParkAPI.Data.DB
     public class SpaceParkContext:DbContext
     {
 
-        public SpaceParkContext(DbContextOptions<SpaceParkContext> opt):base(opt)
-        {
-
-        }
-
-        public SpaceParkContext()
-        {
-        }
-
         public DbSet<Parkingspot> Parkingspots { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
 
@@ -41,17 +32,17 @@ namespace SpaceParkAPI.Data.DB
             }
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    //PATRIC
-        //    //optionsBuilder.UseSqlServer(@"Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //PATRIC
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;");
 
-        //    //ANAS
-        //    //optionsBuilder.UseSqlServer(@"Server = DESKTOP-7NBHFKN; Database = CodeFirst; Trusted_Connection = True;");
+            //ANAS
+            //optionsBuilder.UseSqlServer(@"Server = DESKTOP-7NBHFKN; Database = CodeFirst; Trusted_Connection = True;");
 
-        //    //JONAS
-        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-AI55B02\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;");
-        //}
+            //JONAS
+            optionsBuilder.UseSqlServer(@"Server = DESKTOP-7NBHFKN; Database = SpaceParkAPI; User Id=Anas; Password=123123;");
+        }
     }
 
 }

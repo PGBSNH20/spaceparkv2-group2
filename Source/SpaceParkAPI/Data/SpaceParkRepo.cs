@@ -13,7 +13,7 @@ namespace SpaceParkAPI
             return character;
         }
 
-        public Receipt GetHistory(string personData)
+        public Receipt GetReceipt(string personData)
         {
             throw new NotImplementedException();
         }
@@ -22,6 +22,26 @@ namespace SpaceParkAPI
         {
             var charactership =  API.GetSpaceShip(num);
             return charactership;
+        }
+
+        public void Park(PersonData personData, StarShip starShip)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Park(CharacterData personData, StarShip starShip)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnPark(CharacterData personData, StarShip starShip)
+        {
+            throw new NotImplementedException();
         }
 
         public bool ValidateInput(string name, string shipName)

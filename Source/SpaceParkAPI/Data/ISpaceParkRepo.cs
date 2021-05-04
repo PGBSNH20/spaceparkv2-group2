@@ -4,12 +4,14 @@ namespace SpaceParkAPI
 {
     public interface ISpaceParkRepo
     {
-       // IEnumerable<Character> GetCharacter();
+        bool SaveChanges();
         PersonData GetCharacterByName(string name);
         StarShip GetShip(int num);
 
         bool ValidateInput(string name,string shipName);
-        Receipt GetHistory(string personData);
+        Receipt GetReceipt(string personData);
+         void  Park(CharacterData personData , StarShip starShip);
+         void UnPark(CharacterData personData, StarShip starShip);
 
 
     }

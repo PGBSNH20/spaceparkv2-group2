@@ -23,28 +23,33 @@ namespace SpaceParkAPI
         public string SpaceshipName { get; set; }
         public DateTime Arrival { get; set; }
 
-        public static void Park(StarShip starship, PersonData character)
+        public static void Park(CharacterData personData, StarShip starShip)
         {
+
             using var context = new SpaceParkContext();
             // Calculates parkingspots taken and counts total parkingspots
             var totalParkings = context.Parkingspots.Count();
             var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
 
             // Check if any parkingspot can contain selected starships size and is available.
+            //var parking = context.Parkingspots
+            //    .Where(p => p.MinSize <= double.Parse(starShip.Length)
+            //    && p.MaxSize >= double.Parse(starShip.Length)
+            //    && p.SpaceshipName == null).FirstOrDefault();
+
+            // Check if any parkingspot can contain selected starships size and is available.
             var parking = context.Parkingspots
-                .Where(p => p.MinSize <= double.Parse(starship.Length)
-                && p.MaxSize >= double.Parse(starship.Length)
-                && p.SpaceshipName == null).FirstOrDefault();
+                .Where(p => p.SpaceshipName == null).FirstOrDefault();
 
             // If a parkingspot was found, change the parkingspots values and save to database.
             if (parking != null)
             {
-                parking.SpaceshipName = starship.Name;
-                parking.CharacterName = character.Name;
+                parking.SpaceshipName = starShip.Name;
+                parking.CharacterName = personData.Name;
                 parking.Arrival = DateTime.Now;
                 context.SaveChanges();
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
+                Console.WriteLine($"\nYour {starShip.Name} has been parked at parkingspot number: {parking.ID}");
                 Console.ForegroundColor = ConsoleColor.White;
             }
             // If there are available parkingspots but none matching starshipsize, print message
@@ -63,8 +68,9 @@ namespace SpaceParkAPI
             }
         }
 
-        public static void Unpark(StarShip starship, PersonData character)
+        public static void Unpark(StarShip starship, CharacterData character)
         {
+           
             using var context = new SpaceParkContext();
             // Retrieves the parkingspot where the user has parked, if none was found parked is null.
             Parkingspot parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
@@ -90,7 +96,7 @@ namespace SpaceParkAPI
                     price = (Math.Round(diff, 0) * 12000) + 6000;
                 }
 
-                Console.Clear();
+                //Console.Clear();
                 // Create a new receipt
                 Receipt receipt = new ()
                 {
@@ -121,6 +127,7 @@ namespace SpaceParkAPI
 
         public static void ShowHistory(PersonData character)
         {
+           
             using var context = new SpaceParkContext();
             // Gets all the users receipts based on character name.
             var characterReceipts = context.Receipts.Where(p => p.Name == character.Name).Include("Parkingspot").ToList();

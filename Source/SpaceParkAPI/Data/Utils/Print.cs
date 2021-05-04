@@ -1,4 +1,5 @@
-﻿using SpaceParkAPI.Data.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaceParkAPI.Data.DB;
 using System;
 using System.Linq;
 
@@ -8,6 +9,7 @@ namespace SpaceParkAPI
     {
         public static void TakenSpots()
         {
+            
             using var context = new SpaceParkContext();
             // Calculates parkingspots taken and counts total parkingspots
             var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();

@@ -12,6 +12,7 @@ namespace SpaceParkAPI.Profiles
         public SpaceParkPorfile()
         {
             CreateMap<Receipt, SpaceParkReadDto>();
+            CreateMap<SpaceParkCreateDto, Receipt>();
         }
 
 

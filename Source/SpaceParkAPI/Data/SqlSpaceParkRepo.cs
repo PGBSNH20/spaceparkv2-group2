@@ -17,7 +17,7 @@ namespace SpaceParkAPI.Data
         }
         
 
-        public Receipt GetHistory(string personData)
+        public Receipt GetReceipt(string personData)
         {
             
             // Gets all the users receipts based on character name.
@@ -69,6 +69,32 @@ namespace SpaceParkAPI.Data
             }
             return passed;
 
+        }
+
+        public bool SaveChanges()
+        {
+           return( _context.SaveChanges()>=0);
+        }
+
+        public void Park(CharacterData personData, StarShip starShip)
+        {
+            if (personData == null|| starShip==null)
+            {
+                throw new ArgumentNullException(nameof(personData));
+            }
+            Parkingspot.Park(personData, starShip);    
+            
+        }
+
+        
+
+        public void UnPark(CharacterData personData, StarShip starShip)
+        {
+            if (personData == null || starShip == null)
+            {
+                throw new ArgumentNullException(nameof(personData));
+            }
+            Parkingspot.Unpark(starShip, personData);
         }
     }
 }
