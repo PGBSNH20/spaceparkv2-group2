@@ -9,7 +9,7 @@ namespace SpaceParkAPI
         StarShip GetShip(int num);
 
         bool ValidateInput(string name,string shipName);
-        List<Receipt> GetHistory(string personData);
+        Receipt GetHistory(string personData);
 
 
     }

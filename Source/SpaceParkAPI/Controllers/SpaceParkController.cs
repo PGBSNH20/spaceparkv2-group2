@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SpaceParkAPI;
+using SpaceParkAPI.Dtos;
 
 namespace SpaceParkAPI
 {
@@ -13,10 +15,12 @@ namespace SpaceParkAPI
     public class SpaceParkController : ControllerBase
     {
         private readonly ISpaceParkRepo _repository;
+        private readonly IMapper _mapper;
 
-        public SpaceParkController(ISpaceParkRepo repo)
+        public SpaceParkController(ISpaceParkRepo repo,IMapper mapper)
         {
             _repository = repo;
+            _mapper = mapper;
         }
 
 
@@ -63,10 +67,15 @@ namespace SpaceParkAPI
 
 
         [HttpGet("{name}")]
-        public ActionResult<List<Receipt>> ShowHistory(string name)
+        public ActionResult<SpaceParkReadDto> ShowHistory(string name)
         {
             var commanditem = _repository.GetHistory(name);
-            return Ok(commanditem);
+            if (commanditem!=null)
+            {
+                return Ok(_mapper.Map<SpaceParkReadDto>(commanditem));
+            }
+            return NotFound();
+            
         }
         //[HttpGet("{shipid}")]
         //public ActionResult<StarShip> GetStarShip(int name)

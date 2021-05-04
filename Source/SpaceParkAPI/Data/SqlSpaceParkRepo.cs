@@ -17,18 +17,18 @@ namespace SpaceParkAPI.Data
         }
         
 
-        public List<Receipt> GetHistory(string personData)
+        public Receipt GetHistory(string personData)
         {
             
             // Gets all the users receipts based on character name.
-            var characterReceipts = _context.Receipts.Where(p => p.Name == personData).Include("Parkingspot").ToList();
+            var characterReceipts = _context.Receipts.Where(p => p.Name == personData);
             //Console.WriteLine($"\n{personData.Name}'s parking history");
             //Console.WriteLine();
             //for (int i = 0; i < characterReceipts.Count; i++)
             //{
             //    Print.PrintReceipt(characterReceipts[i], i);
             //}
-            return characterReceipts;
+            return characterReceipts.FirstOrDefault();
         }
 
         public PersonData GetCharacterByName(string name)

@@ -13,7 +13,7 @@ namespace SpaceParkAPI
             return character;
         }
 
-        public List<Receipt> GetHistory(string personData)
+        public Receipt GetHistory(string personData)
         {
             throw new NotImplementedException();
         }
