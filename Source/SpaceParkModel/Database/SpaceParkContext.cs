@@ -13,12 +13,14 @@ namespace SpaceParkModel.Database
         public DbSet<ParkingSpots> ParkingSpots { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<SpacePark> SpaceParks { get; set; }
-
+            
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // production: optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpacePark");
-            // testing: optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
-            optionsBuilder.UseSqlServer(@"Server=localhost,41434;Database=SpaceParks;User=sa;Password=verystrong!pass123;");
+            //testing:
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
+            //optionsBuilder.UseSqlServer(@"Data Source=192.168.1.239\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
+            optionsBuilder.UseSqlServer(@"Server=host.docker.internal,41434;Initial Catalog=SpaceParks;User Id=sa;Password=verystrong!pass123;");
             //optionsBuilder.UseSqlServer(@"Data Source=localhost,41434\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
         }
 
