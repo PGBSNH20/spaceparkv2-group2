@@ -68,20 +68,37 @@ namespace SpaceParkAPI
             var commanditem = _repository.GetHistory(name);
             return Ok(commanditem);
         }
-            //[HttpGet("{shipid}")]
-            //public ActionResult<StarShip> GetStarShip(int name)
-            //{
-            //    var commanditem = _repository.GetShip(name);
-            //    return Ok(commanditem);
-            //}
+        //[HttpGet("{shipid}")]
+        //public ActionResult<StarShip> GetStarShip(int name)
+        //{
+        //    var commanditem = _repository.GetShip(name);
+        //    return Ok(commanditem);
+        //}
 
-            //[HttpGet("/people/name/ship")]
-            //public ActionResult<StarShip> GetStarShip(int name)
-            //{
-            //    var commanditem = _repository.GetShip(name);
-            //    return Ok(commanditem);
-            //}
+        //[HttpGet("/people/name/ship")]
+        //public ActionResult<StarShip> GetStarShip(int name)
+        //{
+        //    var commanditem = _repository.GetShip(name);
+        //    return Ok(commanditem);
+        //}
 
 
-        }
+    }
+    //[ApiController]
+    //[Route("/validate1/")]
+    //public class SpaceParkController1 : ControllerBase
+    //{
+    //    public SpaceParkController1(ISpaceParkRepo repo)
+    //    {
+    //        _repository = repo;
+    //    }
+    //    private readonly ISpaceParkRepo _repository;
+
+    //    [HttpGet("{name}")]
+    //    public ActionResult<List<Receipt>> ShowHistory(string name)
+    //    {
+    //        var commanditem = _repository.GetHistory(name);
+    //        return Ok(commanditem);
+    //    }
+    //}
 }

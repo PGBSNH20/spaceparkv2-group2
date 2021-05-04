@@ -39,7 +39,7 @@ namespace SpaceParkAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpacePark_RestAPI", Version = "v1" });
             });
-            services.AddScoped<ISpaceParkRepo, SpaceParkRepo>();
+           // services.AddScoped<ISpaceParkRepo, SpaceParkRepo>();
             services.AddScoped<ISpaceParkRepo, SqlSpaceParkRepo>();
         }
 

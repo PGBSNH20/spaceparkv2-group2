@@ -15,10 +15,7 @@ namespace SpaceParkAPI.Data
         {
             _context = context;
         }
-        public PersonData GetCharacterByName(string name)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public List<Receipt> GetHistory(string personData)
         {
@@ -34,15 +31,44 @@ namespace SpaceParkAPI.Data
             return characterReceipts;
         }
 
+        public PersonData GetCharacterByName(string name)
+        {
+            var character = API.GetPerson(name);
+            return character;
+        }
+
+        
+
         public StarShip GetShip(int num)
         {
-            throw new NotImplementedException();
+            var charactership = API.GetSpaceShip(num);
+            return charactership;
         }
 
         public bool ValidateInput(string name, string shipName)
         {
-            throw new NotImplementedException();
-            
+            bool passed = false;
+            List<StarShip> ships = new List<StarShip>();
+            Logic a = new Logic();
+
+            var character = API.GetPerson(name);
+
+            if (Logic.ValidateName(name) == true)
+            {
+                a.GetShipListByName(character.Name);
+                ships = a.starshipsAvailable;
+
+                for (int i = 0; i < ships.Count; i++)
+                {
+                    if (shipName.ToLower() == ships[i].Name.ToLower())
+                    {
+                        passed = true;
+                    }
+
+                }
+            }
+            return passed;
+
         }
     }
 }
