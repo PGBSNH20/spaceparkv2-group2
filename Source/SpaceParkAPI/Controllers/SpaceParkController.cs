@@ -109,7 +109,7 @@ namespace SpaceParkAPI
                 var receipt = _repository.UnPark(characterData, s);
 
 
-                return Ok(receipt);
+                return Ok(_mapper.Map<SpaceParkReadDto>(receipt));
 
             }
             else
@@ -147,14 +147,7 @@ namespace SpaceParkAPI
                     CharacterData characterData = new CharacterData() { Name = p.Name, Starships = p.Starships };
                     _repository.Park(characterData, s);
 
-                    SpaceParkReadDto b = new SpaceParkReadDto()
-                    {
-                        Name = p.Name,
-                        StarshipName = s.Name,
-                        Arrival = DateTime.Now,
-
-
-                    };
+                    
                     return Ok("Parking has been done");
                 }
                 else

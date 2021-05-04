@@ -7,8 +7,7 @@ namespace SpaceParkAPI.Dtos
 {
     public class SpaceParkReadDto
     {
-        public int ID { get; set; }
-        public Parkingspot Parkingspot { get; set; }
+        public int ID { get; set; }      
         public string Name { get; set; }
         public string StarshipName { get; set; }
         public DateTime Arrival { get; set; }
