@@ -1,0 +1,36 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+version: '3.4'
+
+services:
+  spaceparkconsole:
+    image: ${DOCKER_REGISTRY-}spaceparkconsole
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: SpaceParkConsole/Dockerfile
+    links:
+      - log-server
+  log-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    hostname: 'log-server'
+    ports:
+      - "41433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "123123"
+      MSSQL_PID: Express
+    volumes:
+      - pgbsnh20-ex2:/var/opt/mssql
+volumes:
+  pgbsnh20-ex2:
+    driver: local
+
+
+
+
+
+
+
+
+

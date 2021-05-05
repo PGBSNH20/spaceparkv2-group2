@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>fb99202d-872a-4aa4-942c-d7bbc40cb0f4</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +22,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\.dockerignore" />
   </ItemGroup>
 
 </Project>

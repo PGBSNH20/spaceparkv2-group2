@@ -6,13 +6,16 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SpaceParkAPI;
+using SpaceParkAPI.Controllers;
 //using SpaceParkAPI.API;
 using SpaceParkAPI.Dtos;
 
 namespace SpaceParkAPI
 {
+
     [ApiController]
     [Route("/validate/")]
+    [ApiKeyAuth]
     public class SpaceParkController : ControllerBase
     {
         private readonly ISpaceParkRepo _repository;
@@ -24,7 +27,8 @@ namespace SpaceParkAPI
             _mapper = mapper;
         }
 
-        [HttpGet("{name}/{shipname}/history")]
+      
+        [HttpGet("{name}/{shipname}/history/")]
         public ActionResult<List<SpaceParkReadDto>> ShowHistory(string name,string shipname)
         {
             var commanditem = _repository.ValidateInput(name, shipname);
