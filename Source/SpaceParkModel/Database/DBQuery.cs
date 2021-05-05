@@ -17,7 +17,7 @@ namespace SpaceParkModel.Database
             return parkingSizes;
         }
 
-        public static async Task<int> GetAvailableParkingSpotID(int sizeID)
+        public static async Task<int> GetAvailableParkingSpotID(int spaceParkId, int sizeID)
         {
             await using var context = new SpaceParkContext();
             // I am filling an array with parkingSpot id's where the sizeID is equal to the parkingSizeID in the database table
@@ -25,44 +25,58 @@ namespace SpaceParkModel.Database
 
             // I am looking for a departure which doesn't have a value and a parking spot that isn't occupied, and we take the first one.
             // find: ID that's un-used by checking all entries without departure
-            int[] unavailableOccupancies = await context.Occupancies.Where(o => !o.DepartureTime.HasValue).Select(o => o.ParkingSpotID).ToArrayAsync();
+            int[] unavailableOccupancies = await context.Occupancies.Where(o => o.SpaceParkID == spaceParkId && !o.DepartureTime.HasValue).Select(o => o.ParkingSpotID).ToArrayAsync();
 
             int firstAvailableSpot = parkingSpots.FirstOrDefault(p => !unavailableOccupancies.Contains(p));
 
             return firstAvailableSpot;
         }
 
-        public static async Task<int> GetAvailableParkingSpotID(SwStarship ship)
+        public static async Task<int> GetAvailableParkingSpotID(int spaceParkId, SwStarship ship)
         {
             double starshipLength = ship.Length;
 
-            await using SpaceParkContext context = new SpaceParkContext();
+            await using SpaceParkContext context = new();
             ParkingSize appropriateParkingSize = await context.ParkingSizes.Where(p => p.Size > starshipLength).OrderBy(p => p.Size).FirstAsync();
-            int availableParkingSpotID = await GetAvailableParkingSpotID(appropriateParkingSize.ID);
+            int availableParkingSpotID = await GetAvailableParkingSpotID(spaceParkId, appropriateParkingSize.ID);
 
             return availableParkingSpotID;
         }
 
-        public static async Task<int> GetNextSmallestAvailableParkingSpotID(SwStarship ship)
+        public static async Task<SpacePark> AddSpacePark(string name)
         {
-            double starshipLength = ship.Length;
-
-            await using SpaceParkContext context = new SpaceParkContext();
-            ParkingSize[] appropriateParkingSizes = await context.ParkingSizes.Where(p => p.Size > starshipLength).OrderBy(p => p.Size).ToArrayAsync();
-
-            foreach (var parkingSize in appropriateParkingSizes)
+            await using var context = new SpaceParkContext();
+            var spacePark = new SpacePark
             {
-                int availableParkingSpotID = await GetAvailableParkingSpotID(parkingSize.ID);
-                if (availableParkingSpotID != 0)
-                {
-                    return availableParkingSpotID;
-                }
-            }
+                Name = name
+            };
 
-            return 0;
+            context.Add(spacePark);
+            context.SaveChanges();
+
+            return spacePark;
         }
 
-        public static async Task<Occupancy> FillOccupancy(string personName, string spaceshipName, int parkingSpotID)
+        //public static async Task<int> GetNextSmallestAvailableParkingSpotID(SwStarship ship)
+        //{
+        //    double starshipLength = ship.Length;
+
+        //    await using SpaceParkContext context = new SpaceParkContext();
+        //    ParkingSize[] appropriateParkingSizes = await context.ParkingSizes.Where(p => p.Size > starshipLength).OrderBy(p => p.Size).ToArrayAsync();
+
+        //    foreach (var parkingSize in appropriateParkingSizes)
+        //    {
+        //        int availableParkingSpotID = await GetAvailableParkingSpotID(parkingSize.ID);
+        //        if (availableParkingSpotID != 0)
+        //        {
+        //            return availableParkingSpotID;
+        //        }
+        //    }
+
+        //    return 0;
+        //}
+
+        public static async Task<Occupancy> FillOccupancy(string personName, string spaceshipName, int parkingSpotID, int spaceParkID)
         {
             if (parkingSpotID == 0)
             {
@@ -75,7 +89,8 @@ namespace SpaceParkModel.Database
                 PersonID = await AddPerson(personName),
                 SpaceshipID = await AddSpaceship(spaceshipName),
                 ParkingSpotID = parkingSpotID,
-                ArrivalTime = DateTime.Now
+                ArrivalTime = DateTime.Now,
+                SpaceParkID = spaceParkID
             };
 
             await using var context = new SpaceParkContext();
@@ -85,12 +100,12 @@ namespace SpaceParkModel.Database
             return occupancy;
         }
 
-        public static async Task<Occupancy> GetOpenOccupancyByName(string name)
+        public static async Task<Occupancy> GetOpenOccupancyByName(int spaceParkId, string name)
         {
             await using var context = new SpaceParkContext();
             int personID = await GetPersonID(name);
 
-            return await context.Occupancies.FirstAsync(o => !o.DepartureTime.HasValue && o.PersonID == personID);
+            return await context.Occupancies.FirstAsync(o => !o.DepartureTime.HasValue && o.SpaceParkID == spaceParkId && o.PersonID == personID);
         }
 
         // Used to show history, not for general caching
@@ -106,6 +121,13 @@ namespace SpaceParkModel.Database
             }
             // get spaceship ID
             return await GetSpaceshipID(name);
+        }
+
+        public static async Task<string> GetSpaceParkName(int spaceParkID)
+        {
+            await using var context = new SpaceParkContext();
+            var spacePark = await context.SpaceParks.FindAsync(spaceParkID);
+            return spacePark.Name;
         }
 
         public static async Task<int> GetSpaceshipID(string name)
@@ -142,14 +164,14 @@ namespace SpaceParkModel.Database
         public static async Task<string> GetPersonName(int personID)
         {
             await using var context = new SpaceParkContext();
-            var person = context.Persons.First(person => person.ID == personID);
+            var person = await context.Persons.FindAsync(personID);
             return person.Name;
         }
 
         public static async Task<string> GetSpaceshipName(int spaceshipID)
         {
             await using var context = new SpaceParkContext();
-            var spaceship = context.Spaceships.First(spaceship => spaceship.ID == spaceshipID);
+            var spaceship = await context.Spaceships.FindAsync(spaceshipID);
             return spaceship.Name;
         }
 

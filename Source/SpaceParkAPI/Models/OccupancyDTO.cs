@@ -12,9 +12,9 @@ namespace SpaceParkAPI.Models
         public int ID { get; set; }
         public string PersonName { get; set; }
         public string SpaceshipName { get; set; }
+        public string SpaceParkName { get; set; }
         public DateTime ArrivalTime { get; set; }
         public DateTime? DepartureTime { get; set; }
         public int ParkingSpotID { get; set; }
-        //public int SpaceParkName { get; set; }
     }
 }

@@ -18,5 +18,4 @@ services:
       - pgbsnh20-ex2:/var/opt/mssql
 volumes:
   pgbsnh20-ex2:
-    driver: local
-  
+    driver: local  

@@ -60,8 +60,8 @@ namespace SpaceParkAPI.Controllers
             return OccupancyToDTO(occupancy);
         }
 
-        [HttpGet, Route("register/{person}/{spaceship}")]
-        public async Task<ActionResult<OccupancyDTO>> Register(string person, string spaceship)
+        [HttpPost, Route("register/{spaceParkId}/{person}/{spaceship}")]
+        public async Task<ActionResult<OccupancyDTO>> Register(int spaceParkId, string person, string spaceship)
         {
             SwApi swApi = new();
             if(!await swApi.ValidateSwName(person))
@@ -74,20 +74,25 @@ namespace SpaceParkAPI.Controllers
                 // TODO: Give the right errors.
                 return NotFound();
             }
-            int parkingSpotId = await DBQuery.GetAvailableParkingSpotID(starships[0]);
+            int parkingSpotId = await DBQuery.GetAvailableParkingSpotID(spaceParkId, starships[0]);
             if (parkingSpotId == 0)
             {
                 return NotFound();
             }
-            var occupancy = await DBQuery.FillOccupancy(person, spaceship, parkingSpotId);
+            var occupancy = await DBQuery.FillOccupancy(person, spaceship, parkingSpotId, spaceParkId);
 
             return OccupancyToDTO(occupancy);
         }
 
-        [HttpGet, Route("unpark/{person}")]
-        public async Task<ActionResult<InvoiceDTO>> Unpark(string person)
+        [HttpPost, Route("{spaceParkId}/{person}/{action}")]
+        [HttpPost, Route("unpark/{spaceParkId}/{person}")]
+        public async Task<ActionResult<InvoiceDTO>> Unpark(int spaceParkId, string person, string action)
         {
-            var occupancy = await DBQuery.GetOpenOccupancyByName(person);
+            if (action == "unpark")
+            {
+                
+            }
+            var occupancy = await DBQuery.GetOpenOccupancyByName(spaceParkId, person);
 
             await DBQuery.AddPaymentAndDeparture(occupancy);
 
@@ -128,7 +133,8 @@ namespace SpaceParkAPI.Controllers
             SpaceshipName = DBQuery.GetSpaceshipName(occupancy.SpaceshipID).Result,
             ArrivalTime = occupancy.ArrivalTime,
             DepartureTime = occupancy.DepartureTime,
-            ParkingSpotID = occupancy.ParkingSpotID
+            ParkingSpotID = occupancy.ParkingSpotID,
+            SpaceParkName = DBQuery.GetSpaceParkName(occupancy.SpaceParkID).Result
         };
 
         private static HistoryDTO OccupancyToHistoryDTO(OccupancyHistory occupancyHistory) =>
