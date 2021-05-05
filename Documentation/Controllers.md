@@ -1,3 +1,6 @@
 ## Base: /api
 
-### Occupancies
+### Occupancies 
+
+#### GET
+* /parking
