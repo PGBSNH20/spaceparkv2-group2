@@ -9,3 +9,6 @@ This is our table on SQL that has the Occupancies of that SpacePort
 | --- | --- |
 | /parking | Give back a list of current parked ships. |
 | /parking/{id} | Gives back a specific parked ship according to the Id. |
+| /parking/search/{name} | Searches for parking depending on name given, **validates** name in the background. |
+| /parking/register/{person}/{spaceship} | Parks a spaceship according to the SW name given. **Validates** that it's a SW person, along with a  correct spaceship in the *background* |
+| /parking/unpark/{person} | Unparks a person *depending* on the name given, gives back the **amount paid** along with **hours** that they stayed |
