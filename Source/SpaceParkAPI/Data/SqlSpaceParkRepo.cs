@@ -17,18 +17,18 @@ namespace SpaceParkAPI.Data
         }
         
 
-        public Receipt GetReceipt(string personData)
+        public List<Receipt> PersonHistory(CharacterData personData)
         {
-            
+
             // Gets all the users receipts based on character name.
-            var characterReceipts = _context.Receipts.Where(p => p.Name == personData).Include("Parkingspot");
-            //Console.WriteLine($"\n{personData.Name}'s parking history");
-            //Console.WriteLine();
+            var characterReceipts = _context.Receipts.Where(p => p.Name == personData.Name).ToList(); ;
+            Console.WriteLine($"\n{personData.Name}'s parking history");
+            Console.WriteLine();
             //for (int i = 0; i < characterReceipts.Count; i++)
             //{
             //    Print.PrintReceipt(characterReceipts[i], i);
             //}
-            return characterReceipts.FirstOrDefault();
+            return characterReceipts;
         }
 
         public PersonData GetCharacterByName(string name)
@@ -97,5 +97,7 @@ namespace SpaceParkAPI.Data
             var x= Parkingspot.Unpark(starShip, personData);
             return x;
         }
+
+        
     }
 }

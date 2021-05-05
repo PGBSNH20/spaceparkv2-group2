@@ -9,7 +9,7 @@ namespace SpaceParkAPI
         StarShip GetShip(int num);
 
         bool ValidateInput(string name,string shipName);
-        Receipt GetReceipt(string personData);
+        List<Receipt> PersonHistory(CharacterData personData);
          void  Park(CharacterData personData , StarShip starShip);
          Receipt UnPark(CharacterData personData, StarShip starShip);
 
