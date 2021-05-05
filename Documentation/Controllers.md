@@ -1,7 +1,7 @@
 ## Base: /api
 
 ### Occupancies 
-This is our table on SQL that has the Occupancies of that SpacePort
+This is our table on SQL that has the Occupancies of SpaceParks
 
 #### GET
 
