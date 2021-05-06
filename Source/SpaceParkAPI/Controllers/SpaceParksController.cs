@@ -44,7 +44,7 @@ namespace SpaceParkAPI.Controllers
             return SpaceParkToDTO(spacePark);
         }
 
-        [HttpGet, Route("register/{name}")]
+        [HttpPost, Route("register/{name}")]
         public async Task<ActionResult<SpaceParkDTO>> Register(string name)
         {
             var spacePark = await DBQuery.AddSpacePark(name);

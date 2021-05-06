@@ -46,16 +46,11 @@ namespace SpaceParkAPI.Controllers
             return OccupancyToDTO(occupancy);
         }
 
-        [HttpGet, Route("search/{name}")]
-        public async Task<ActionResult<OccupancyDTO>> Search(string name)
+        [HttpPost]
+        public async Task<ActionResult<OccupancyDTO>> AddOccupancy(Occupancy occupancy)
         {
-            var person = await _context.Persons.FirstAsync(p => p.Name == name);
-            var occupancy = await _context.Occupancies.FirstAsync(o => o.PersonID == person.ID && o.DepartureTime == null);
-
-            if (occupancy == null)
-            {
-                return NotFound();
-            }
+            _context.Add(occupancy);
+            await _context.SaveChangesAsync();
 
             return OccupancyToDTO(occupancy);
         }
@@ -64,34 +59,42 @@ namespace SpaceParkAPI.Controllers
         public async Task<ActionResult<OccupancyDTO>> Register(int spaceParkId, string person, string spaceship)
         {
             SwApi swApi = new();
-            if(!await swApi.ValidateSwName(person))
+            if (!await swApi.ValidateSwName(person))
             {
-                return NotFound();
+                return BadRequest("The force doesn't recognize you!");
             }
             var starships = await swApi.SearchResource<SwStarship>(SwApiResource.starships, spaceship);
             if (starships.Count == 0)
             {
-                // TODO: Give the right errors.
-                return NotFound();
+                return BadRequest("No starship with that name was found!");
             }
             int parkingSpotId = await DBQuery.GetAvailableParkingSpotID(spaceParkId, starships[0]);
             if (parkingSpotId == 0)
             {
-                return NotFound();
+                return NotFound("Parking-lot is full, no available parking at the moment!");
             }
             var occupancy = await DBQuery.FillOccupancy(person, spaceship, parkingSpotId, spaceParkId);
 
             return OccupancyToDTO(occupancy);
         }
 
-        [HttpPost, Route("{spaceParkId}/{person}/{action}")]
-        [HttpPost, Route("unpark/{spaceParkId}/{person}")]
-        public async Task<ActionResult<InvoiceDTO>> Unpark(int spaceParkId, string person, string action)
+        [HttpGet, Route("search/{name}")]
+        public async Task<ActionResult<OccupancyDTO>> Search(string name)
         {
-            if (action == "unpark")
+            var person = await _context.Persons.FirstAsync(p => p.Name == name);
+            var occupancy = await _context.Occupancies.FirstAsync(o => o.PersonID == person.ID && o.DepartureTime == null);
+
+            if (occupancy == null)
             {
-                
+                return NotFound("This person isn't parked here");
             }
+
+            return OccupancyToDTO(occupancy);
+        }
+
+        [HttpPost, Route("unpark/{spaceParkId}/{person}")]
+        public async Task<ActionResult<InvoiceDTO>> Unpark(int spaceParkId, string person)
+        {
             var occupancy = await DBQuery.GetOpenOccupancyByName(spaceParkId, person);
 
             await DBQuery.AddPaymentAndDeparture(occupancy);
@@ -144,67 +147,7 @@ namespace SpaceParkAPI.Controllers
             SpaceshipName = occupancyHistory.SpaceParkName,
             ArrivalTime = occupancyHistory.ArrivalTime,
             DepartureTime = occupancyHistory.DepartureTime,
-            AmountPaid = occupancyHistory.AmountPaid,
-            // TODO: Add SpaceParkName (for multi-tenant)
-            SpaceParkName = ""
+            AmountPaid = occupancyHistory.AmountPaid
         };
-
-        // PUT: api/Occupancies/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutOccupancy(int id, Occupancy occupancy)
-        //{
-        //    if (id != occupancy.ID)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(occupancy).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!OccupancyExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // POST: api/Occupancies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Occupancy>> PostOccupancy(Occupancy occupancy)
-        //{
-        //    _context.Occupancies.Add(occupancy);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetOccupancy", new { id = occupancy.ID }, occupancy);
-        //}
-
-        //// DELETE: api/Occupancies/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteOccupancy(int id)
-        //{
-        //    var occupancy = await _context.Occupancies.FindAsync(id);
-        //    if (occupancy == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Occupancies.Remove(occupancy);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
     }
 }

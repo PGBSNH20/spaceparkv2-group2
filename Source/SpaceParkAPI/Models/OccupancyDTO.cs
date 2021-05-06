@@ -10,6 +10,7 @@ namespace SpaceParkAPI.Models
         // Data Transfer object
 
         public int ID { get; set; }
+
         public string PersonName { get; set; }
         public string SpaceshipName { get; set; }
         public string SpaceParkName { get; set; }

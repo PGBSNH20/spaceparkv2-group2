@@ -204,6 +204,26 @@ namespace SpaceParkModel.Database
             await UpdateOccupancy(occupancy);
         }
 
+        public static async Task AddPayment(Occupancy occupancy)
+        {
+            await using var context = new SpaceParkContext();
+
+            bool paid = await context.Payments.AnyAsync(p => p.OccupancyID == occupancy.ID);
+            if (!paid && occupancy.DepartureTime.HasValue)
+            {
+                Payment payment = new Payment()
+                {
+                    OccupancyID = occupancy.ID,
+                    Amount = await CalculatePaymentAmount(occupancy)
+                };
+
+                context.Payments.Add(payment);
+                context.SaveChanges();
+
+                await UpdateOccupancy(occupancy);
+            }
+        }
+
         public static async Task<decimal> CalculatePaymentAmount(Occupancy occupancy)
         {
             int parkingSizeID = await GetParkingSizeIDBySpot(occupancy.ParkingSpotID);

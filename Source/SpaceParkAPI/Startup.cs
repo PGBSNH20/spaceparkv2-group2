@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using SpaceParkModel.Database;
+using SpaceParkAPI.Middlewares;
 
 namespace SpaceParkAPI
 {
@@ -44,6 +45,9 @@ namespace SpaceParkAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            string apiKey = Configuration.GetValue<string>("ApiKey");
+            app.UseAPIKey(apiKey);
 
             app.UseEndpoints(endpoints =>
             {
