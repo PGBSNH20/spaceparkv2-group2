@@ -20,3 +20,7 @@ This is a table that holds the different spaceparks, each occupancy has a *Space
 Request Type | URL | Description
 ------------ | --- | -----------
 | Get | /spacepark | Gives back all of the spaceparks
+| Post | /spacepark | Adds a new spacepark 
+| Get | /spacepark/{id} | Gets the spacepark according to the id given
+| Delete | /spacepark/{id} | Deletes a spacepark according to the id given
+| Post | /spacepark/register/{name} | Registers a new park
