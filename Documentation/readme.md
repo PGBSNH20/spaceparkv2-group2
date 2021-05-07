@@ -20,7 +20,7 @@ This is just a settings file, it is added the apikey here, so it's there, not ha
 Two files were added for this one, APIKeyMiddleware.cs, and APIKeyMiddlewareExtensions.cs, we get our requests for the API and we just make sure that there is an api key, it must be there, and these files just check that there is a api key, if there is the invoke method just deals if there is or not. 
 The extension file was added so in the startup.cs it would all look unison, so  app.UseAPIKey(apikey) this is simply to make it easier to read for anyone.
 
-## Input Validations
+## Input Validation
 We did this by adding attributes to the tables that would be used by the API for for example the person table on the name got a [Required] and a [StringLength(255)] when the name gets entered into the api it just automatically checks if the char count exceeds 255, (the 255 char I just googled what is normal max length). Because we are using attributes on the tables, in the controllers we added a new file for People where is uses Person's objects and it can use the attributes added there, so if you want to search for a person there.
 
 ![image](https://user-images.githubusercontent.com/70092696/117413180-f1c00780-af15-11eb-8f3c-026db46b2821.png)
