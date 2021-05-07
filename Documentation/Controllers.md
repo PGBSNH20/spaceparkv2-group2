@@ -14,6 +14,8 @@ Request Type | URL | Description
 | Get | /parking/history | Gives back *all* of the history reconds on the occupancy table |
 | Get | /parking/history/{person} | Give back the history of a *specified* person. |
 
+> the **/parking/unpark/{spaceparkid}/{person}** something to note is that unpark is a verb, I could not find another word to use that would make better or easier sense in Nouns, I understand that in Rest-API it is taboo/ a-big-no-no to use verbs, but in this case, it just makes the most sense.
+
 ### SpaceParks
 Spacepark is a table in SQL that holds the different SpaceParks, each occupancy has a *SpaceParkId* which says which spacepark that occupancy is at, the relationship between the tables are as follows; *One Spacepark can have many Occupancies*
 
