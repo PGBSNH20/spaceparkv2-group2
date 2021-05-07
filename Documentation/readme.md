@@ -17,4 +17,9 @@ Added the *DTO*'s in order to specify which information the api gets to view, to
 This is just a settings file, it is added the apikey here, so it's there, not hard coded in different places. Everything else on this fine is as how it was auto generated.
 
 ## Middlewares
+Two files were added for this one, APIKeyMiddleware.cs, and APIKeyMiddlewareExtensions.cs, 
+
+## Input Validations
+We did this by adding attributes to the tables that would be used by the API for for example the person table on the name got a [Required] and a [StringLength(255)] when the name gets entered into the api it just automatically checks if the char count exceeds 255, (the 255 char I just googled what is normal max length)
+![image](https://user-images.githubusercontent.com/70092696/117413180-f1c00780-af15-11eb-8f3c-026db46b2821.png)
 
