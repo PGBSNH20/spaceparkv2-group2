@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceParkModel.Database;
 
 namespace SpaceParkModel.Migrations
 {
     [DbContext(typeof(SpaceParkContext))]
-    partial class SpaceParkContextModelSnapshot : ModelSnapshot
+    [Migration("20210502112829_spaceparknewtables")]
+    partial class spaceparknewtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 8, 0, 370, DateTimeKind.Unspecified).AddTicks(1198),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 2
                         },
                         new
@@ -66,7 +68,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 35, 9, 153, DateTimeKind.Unspecified).AddTicks(2960),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 2
                         },
                         new
@@ -76,7 +78,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 38, 27, 669, DateTimeKind.Unspecified).AddTicks(1688),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -86,7 +88,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 39, 27, 365, DateTimeKind.Unspecified).AddTicks(8201),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -96,7 +98,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 40, 6, 198, DateTimeKind.Unspecified).AddTicks(9431),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -106,7 +108,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 22, 19, 41, 30, 457, DateTimeKind.Unspecified).AddTicks(3860),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -116,7 +118,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 23, 11, 42, 58, 902, DateTimeKind.Unspecified).AddTicks(6162),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -126,7 +128,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 24, 12, 16, 12, 736, DateTimeKind.Unspecified).AddTicks(1570),
                             ParkingSpotID = 1,
                             PersonID = 2,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -136,7 +138,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 24, 12, 18, 2, 489, DateTimeKind.Unspecified).AddTicks(5235),
                             ParkingSpotID = 1,
                             PersonID = 2,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 3
                         },
                         new
@@ -146,7 +148,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 24, 14, 43, 18, 801, DateTimeKind.Unspecified).AddTicks(4517),
                             ParkingSpotID = 4,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 5
                         },
                         new
@@ -155,7 +157,7 @@ namespace SpaceParkModel.Migrations
                             ArrivalTime = new DateTime(2021, 3, 25, 10, 1, 58, 653, DateTimeKind.Unspecified).AddTicks(3626),
                             ParkingSpotID = 2,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 4
                         },
                         new
@@ -165,7 +167,7 @@ namespace SpaceParkModel.Migrations
                             DepartureTime = new DateTime(2021, 3, 25, 11, 0, 7, 53, DateTimeKind.Unspecified).AddTicks(8153),
                             ParkingSpotID = 1,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 6
                         },
                         new
@@ -174,7 +176,7 @@ namespace SpaceParkModel.Migrations
                             ArrivalTime = new DateTime(2021, 3, 24, 12, 22, 6, 27, DateTimeKind.Unspecified).AddTicks(7378),
                             ParkingSpotID = 3,
                             PersonID = 1,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 1
                         },
                         new
@@ -183,7 +185,7 @@ namespace SpaceParkModel.Migrations
                             ArrivalTime = new DateTime(2021, 3, 24, 12, 22, 6, 27, DateTimeKind.Unspecified).AddTicks(7378),
                             ParkingSpotID = 4,
                             PersonID = 3,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 2
                         },
                         new
@@ -192,7 +194,7 @@ namespace SpaceParkModel.Migrations
                             ArrivalTime = new DateTime(2021, 3, 24, 12, 22, 6, 27, DateTimeKind.Unspecified).AddTicks(7378),
                             ParkingSpotID = 5,
                             PersonID = 4,
-                            SpaceParkID = 1,
+                            SpaceParkID = 0,
                             SpaceshipID = 3
                         });
                 });
@@ -376,9 +378,7 @@ namespace SpaceParkModel.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -420,35 +420,11 @@ namespace SpaceParkModel.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("SpaceParks");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Name = "Citadel of Rur"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Name = "Death Star Parking"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Name = "Sorca Retreat"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Name = "Space Yoda"
-                        });
                 });
 
             modelBuilder.Entity("SpaceParkModel.Database.Spaceship", b =>
@@ -459,9 +435,7 @@ namespace SpaceParkModel.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

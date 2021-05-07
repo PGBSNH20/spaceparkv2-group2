@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SpaceParkModel.Database;
+using SpaceParkAPI.Middlewares;
 
 namespace SpaceParkAPI
 {
@@ -26,7 +22,7 @@ namespace SpaceParkAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<SpaceParkContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,6 +45,9 @@ namespace SpaceParkAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            string apiKey = Configuration.GetValue<string>("ApiKey");
+            app.UseAPIKey(apiKey);
 
             app.UseEndpoints(endpoints =>
             {

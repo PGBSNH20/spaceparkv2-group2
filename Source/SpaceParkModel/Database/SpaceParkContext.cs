@@ -12,12 +12,17 @@ namespace SpaceParkModel.Database
         public DbSet<ParkingSize> ParkingSizes { get; set; }
         public DbSet<ParkingSpots> ParkingSpots { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
+        public DbSet<SpacePark> SpaceParks { get; set; }
+            
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // production: optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpacePark");
-            // testing: optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
+            //testing:
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AFKC3I2\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
+            //optionsBuilder.UseSqlServer(@"Data Source=192.168.1.239\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
+            //optionsBuilder.UseSqlServer(@"Server=host.docker.internal,41434;Initial Catalog=SpaceParks;User Id=sa;Password=verystrong!pass123;");
+            optionsBuilder.UseSqlServer(@"Server=spaceparkdb,1433;Initial Catalog=SpaceParks;User Id=sa;Password=verystrong!pass123;");
+            //optionsBuilder.UseSqlServer(@"Data Source=localhost,41434\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=SpaceParkTesting");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -62,23 +67,32 @@ namespace SpaceParkModel.Database
             );
             #endregion
 
+            #region SpacePark
+            modelBuilder.Entity<SpacePark>().HasData(
+                new SpacePark { ID = 1, Name = "Citadel of Rur" },
+                new SpacePark { ID = 2, Name = "Death Star Parking" },
+                new SpacePark { ID = 3, Name = "Sorca Retreat" },
+                new SpacePark { ID = 4, Name = "Space Yoda" }
+            );
+            #endregion
+
             #region Occupancy
             modelBuilder.Entity<Occupancy>().HasData(
-                new Occupancy { ID = 1,  PersonID = 1, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-22 18:26:53.6491508", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:08:00.3701198", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 2,  PersonID = 1, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-22 19:25:37.8613124", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:35:09.1532960", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 3,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:35:45.7119285", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:38:27.6691688", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 4,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:39:23.3433465", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:39:27.3658201", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 5,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:39:46.3596936", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:40:06.1989431", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 6,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:41:28.5042097", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:41:30.4573860", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 7,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-23 11:42:13.4526063", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-23 11:42:58.9026162", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 8,  PersonID = 2, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-24 12:15:59.0461350", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 12:16:12.7361570", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 9,  PersonID = 2, SpaceshipID = 3, ArrivalTime = DateTime.Parse("2021-03-24 12:17:55.9968849", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 12:18:02.4895235", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 11, PersonID = 1, SpaceshipID = 5, ArrivalTime = DateTime.Parse("2021-03-24 12:22:24.5828001", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 14:43:18.8014517", CultureInfo.InvariantCulture), ParkingSpotID = 4 },
-                new Occupancy { ID = 12, PersonID = 1, SpaceshipID = 4, ArrivalTime = DateTime.Parse("2021-03-25 10:01:58.6533626", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 2 },
-                new Occupancy { ID = 13, PersonID = 1, SpaceshipID = 6, ArrivalTime = DateTime.Parse("2021-03-25 10:59:56.0403378", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-25 11:00:07.0538153", CultureInfo.InvariantCulture), ParkingSpotID = 1 },
-                new Occupancy { ID = 14, PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 3 },
-                new Occupancy { ID = 15, PersonID = 3, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 4 },
-                new Occupancy { ID = 16, PersonID = 4, SpaceshipID = 3, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 5 }
+                new Occupancy { ID = 1,  PersonID = 1, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-22 18:26:53.6491508", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:08:00.3701198", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 2,  PersonID = 1, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-22 19:25:37.8613124", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:35:09.1532960", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 3,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:35:45.7119285", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:38:27.6691688", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 4,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:39:23.3433465", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:39:27.3658201", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 5,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:39:46.3596936", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:40:06.1989431", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 6,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-22 19:41:28.5042097", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-22 19:41:30.4573860", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 7,  PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-23 11:42:13.4526063", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-23 11:42:58.9026162", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 8,  PersonID = 2, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-24 12:15:59.0461350", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 12:16:12.7361570", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 9,  PersonID = 2, SpaceshipID = 3, ArrivalTime = DateTime.Parse("2021-03-24 12:17:55.9968849", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 12:18:02.4895235", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 11, PersonID = 1, SpaceshipID = 5, ArrivalTime = DateTime.Parse("2021-03-24 12:22:24.5828001", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-24 14:43:18.8014517", CultureInfo.InvariantCulture), ParkingSpotID = 4, SpaceParkID = 1 },
+                new Occupancy { ID = 12, PersonID = 1, SpaceshipID = 4, ArrivalTime = DateTime.Parse("2021-03-25 10:01:58.6533626", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 2, SpaceParkID = 1 },
+                new Occupancy { ID = 13, PersonID = 1, SpaceshipID = 6, ArrivalTime = DateTime.Parse("2021-03-25 10:59:56.0403378", CultureInfo.InvariantCulture), DepartureTime = DateTime.Parse("2021-03-25 11:00:07.0538153", CultureInfo.InvariantCulture), ParkingSpotID = 1, SpaceParkID = 1 },
+                new Occupancy { ID = 14, PersonID = 1, SpaceshipID = 1, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 3, SpaceParkID = 1 },
+                new Occupancy { ID = 15, PersonID = 3, SpaceshipID = 2, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 4, SpaceParkID = 1 },
+                new Occupancy { ID = 16, PersonID = 4, SpaceshipID = 3, ArrivalTime = DateTime.Parse("2021-03-24 12:22:06.0277378", CultureInfo.InvariantCulture), DepartureTime = null,                                                                        ParkingSpotID = 5, SpaceParkID = 1 }
             );
             #endregion
 
