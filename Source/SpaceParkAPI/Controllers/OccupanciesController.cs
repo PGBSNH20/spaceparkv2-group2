@@ -78,7 +78,8 @@ namespace SpaceParkAPI.Controllers
             return OccupancyToDTO(occupancy);
         }
 
-        [HttpGet, Route("search/{name}")]
+        // used to be search
+        [HttpGet, Route("person/{name}")]
         public async Task<ActionResult<OccupancyDTO>> Search(string name)
         {
             var person = await _context.Persons.FirstAsync(p => p.Name == name);
