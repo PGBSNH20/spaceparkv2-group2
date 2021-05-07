@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using SpaceParkModel.Database;
 using SpaceParkAPI.Middlewares;
+using SpaceParkAPI.Headers;
 
 namespace SpaceParkAPI
 {
@@ -27,6 +28,7 @@ namespace SpaceParkAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpaceParkAPI", Version = "v1" });
+                c.OperationFilter<APIKeyHeaderFilter>();
             });
         }
 
