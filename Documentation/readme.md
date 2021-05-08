@@ -50,8 +50,13 @@ We will be entering: "Bearer *your token here*"
 
 Authorize then close. After that the user should be able to use the other commands in the API with no problem. For example  the *Get* /parking we enter our Apikey and *Execute* and it should look something like this
 
+![image](https://user-images.githubusercontent.com/70092696/117545609-d09b0c00-b026-11eb-8ae3-7f21084cefc2.png)
+
 We also added a Authorization in the controllers, so if you are a Visitor and you try to add a new SpacePark, the visitor user will not be able to do that, it will give out a *403 Error*
 
 ![image](https://user-images.githubusercontent.com/70092696/117545784-8fefc280-b027-11eb-80b0-02fb919e58ff.png)
 
-![image](https://user-images.githubusercontent.com/70092696/117545609-d09b0c00-b026-11eb-8ae3-7f21084cefc2.png)
+Now if it was a Administrator trying to use the same function it should look something like this: 
+
+![image](https://user-images.githubusercontent.com/70092696/117545898-0b517400-b028-11eb-87c4-846605ccc4d1.png)
+
