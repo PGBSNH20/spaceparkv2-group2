@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SpaceParkModel.SwApi;
 
 namespace SpaceParkAPI.Controllers
 {
+    [Authorize]
     [Route("api/parking")]
     [ApiController]
     public class OccupanciesController : ControllerBase
