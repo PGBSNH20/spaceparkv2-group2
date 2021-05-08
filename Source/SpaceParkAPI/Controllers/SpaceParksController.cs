@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpaceParkAPI.Authentication;
 using SpaceParkAPI.Models;
 using SpaceParkModel.Database;
 
 namespace SpaceParkAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     [Route("api/spacepark")]
     [ApiController]
     public class SpaceParksController : ControllerBase
