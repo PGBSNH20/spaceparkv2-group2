@@ -1,5 +1,15 @@
 ## Base: /api
 
+### Authenticate
+This has been added to have users, in the instructions it is stated to have Visitors (so the star wars people that come to park their spaceships) and also administrators
+
+Request Type | URL | Description
+------------ | --- | -----------
+| Post | /Authenticate/Login | This lets a user log in to the system. |
+| Post | /Authenticate/register | This will register a new user (a visitor) |
+| Post | /Authenticate/register-admin | This will register a new admin-user |
+
+
 ### Occupancies 
 This is our table on SQL that has the Occupancies of SpaceParks so in the controllers the class is named OccupanciesController, but for api purposes we named it parking.
 
